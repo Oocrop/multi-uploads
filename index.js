@@ -209,14 +209,12 @@ module.exports = class MultiUploads extends Plugin {
 					i1 +
 					f.replaceAll(" ", "_");
 				filenames[i] = name;
-				console.info(name);
 				while (filenames.indexOf(name) !== i) {
 					name =
 						(files.spoiler ? "SPOILER_" : "") +
 						++i1 +
 						f.replaceAll(" ", "_");
 					filenames[i] = name;
-					console.info(name);
 				}
 			}
 		});
