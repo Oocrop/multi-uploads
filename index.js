@@ -123,62 +123,62 @@ module.exports = class MultiUploads extends Plugin {
 			},
 			true
 		);
-		const { getPendingReply } = await getModule(["getPendingReply"]);
-		const ChannelTextAreaContainer = await getModule(
-			m => m.type?.render?.displayName === "ChannelTextAreaContainer"
-		);
-		inject(
-			"multiuploads-pre-ChannelTextAreaContainer",
-			ChannelTextAreaContainer.type,
-			"render",
-			args => {
-				args[0].onSubmit = new Proxy(args[0].onSubmit, {
-					apply: (target, thisArg, args1) => {
-						if (
-							args1[0] === "" &&
-							this.filesStore.getFiles(args[0].channel.id)
-						) {
-							const reply = getPendingReply(args[0].channel.id);
-							const message = createMessage(
-								args[0].channel.id,
-								"",
-								false,
-								reply
-									? MessageTypes.REPLY
-									: MessageTypes.DEFAULT,
-								reply
-									? {
-											guild_id: reply.channel.guild_id,
-											channel_id: reply.channel.id,
-											message_id: reply.message.id
-									  }
-									: undefined,
-								reply?.shouldMention
-									? undefined
-									: {
-											parse: [
-												"users",
-												"roles",
-												"everyone"
-											],
-											replied_user: false
-									  }
-							);
-							this.uploadFiles(args[0].channel.id, message);
-							return Promise.resolve({
-								shouldClear: true,
-								shouldRefocus: true
-							});
-						}
-						return target.apply(thisArg, args1);
-					}
-				});
-				return args;
-			},
-			true
-		);
-		ChannelTextAreaContainer.type.render.displayName =
-			"ChannelTextAreaContainer";
+		// const { getPendingReply } = await getModule(["getPendingReply"]);
+		// const ChannelTextAreaContainer = await getModule(
+		// 	m => m.type?.render?.displayName === "ChannelTextAreaContainer"
+		// );
+		// inject(
+		// 	"multiuploads-pre-ChannelTextAreaContainer",
+		// 	ChannelTextAreaContainer.type,
+		// 	"render",
+		// 	args => {
+		// 		args[0].onSubmit = new Proxy(args[0].onSubmit, {
+		// 			apply: (target, thisArg, args1) => {
+		// 				if (
+		// 					args1[0] === "" &&
+		// 					this.filesStore.getFiles(args[0].channel.id)
+		// 				) {
+		// 					const reply = getPendingReply(args[0].channel.id);
+		// 					const message = createMessage(
+		// 						args[0].channel.id,
+		// 						"",
+		// 						false,
+		// 						reply
+		// 							? MessageTypes.REPLY
+		// 							: MessageTypes.DEFAULT,
+		// 						reply
+		// 							? {
+		// 									guild_id: reply.channel.guild_id,
+		// 									channel_id: reply.channel.id,
+		// 									message_id: reply.message.id
+		// 							  }
+		// 							: undefined,
+		// 						reply?.shouldMention
+		// 							? undefined
+		// 							: {
+		// 									parse: [
+		// 										"users",
+		// 										"roles",
+		// 										"everyone"
+		// 									],
+		// 									replied_user: false
+		// 							  }
+		// 					);
+		// 					this.uploadFiles(args[0].channel.id, message);
+		// 					return Promise.resolve({
+		// 						shouldClear: true,
+		// 						shouldRefocus: true
+		// 					});
+		// 				}
+		// 				return target.apply(thisArg, args1);
+		// 			}
+		// 		});
+		// 		return args;
+		// 	},
+		// 	true
+		// );
+		// ChannelTextAreaContainer.type.render.displayName =
+		// 	"ChannelTextAreaContainer";
 	}
 
 	pluginWillUnload() {
@@ -187,7 +187,7 @@ module.exports = class MultiUploads extends Plugin {
 		uninject("multiuploads-isModalOpen");
 		uninject("multiuploads-cancelUpload");
 		uninject("multiuploads-pre-sendMessage");
-		uninject("multiuploads-pre-ChannelTextAreaContainer");
+		// uninject("multiuploads-pre-ChannelTextAreaContainer");
 	}
 
 	async uploadFiles(channelId, json) {
