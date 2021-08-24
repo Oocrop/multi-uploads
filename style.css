@@ -1,0 +1,25 @@
+.multiuploads-batchGrid {
+	gap: 5px;
+}
+
+.multiuploads-file {
+	width: 150px;
+	height: 150px;
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: auto 96px;
+}
+
+.multiuploads-topRow,
+.multiuploads-bottomRow {
+	margin: 8px;
+}
+
+.multiuploads-fileInfo {
+	max-width: 100%;
+}
+
+.multiuploads-fileName {
+	max-height: 32px;
+	overflow: hidden;
+}
