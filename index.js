@@ -45,11 +45,12 @@ module.exports = class MultiUploads extends Plugin {
 		);
 		this.UploadErrorModal = await getModuleByDisplayName("UploadError");
 
+		const Channel = await getModule(m => m.prototype?.getRecipientId);
 		const ChannelChatMemo = await getModule(
 			m => m.type?.toString().indexOf("renderThreadNotice") > -1
 		);
 		const ChannelChat = forceRender(
-			() => ChannelChatMemo.type({ channel: {} }).type
+			() => ChannelChatMemo.type({ channel: new Channel({}) }).type
 		);
 		inject(
 			"multiuploads-ChannelChat",
